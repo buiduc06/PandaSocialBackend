@@ -13,6 +13,7 @@ class FriendShipController extends Controller
 {
 	public $useId;
 
+
 	function __construct()
 	{
 		$user = JWTAuth::parseToken()->authenticate();
