@@ -140,4 +140,13 @@ public function getPostByUid(request $uid_user)
     return response()->json($data, 200);
 }
 
+public function updatePost(request $request)
+{
+    $update = PostMulti::findOrFail($request->post_id);
+    $update->update([
+        'pms_content' => $request->content
+    ]);
+
+    return response()->json($update, 200);
+}
 }

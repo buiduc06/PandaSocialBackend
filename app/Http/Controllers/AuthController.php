@@ -91,4 +91,12 @@ class AuthController extends Controller
         return response($data);
     }
 
+    public function searchUser(request $request)
+    {
+        $user = $this->jwtAuth->parseToken()->authenticate();
+        $dataUser = User::where('id', '!=' , $user['id'])->where('name','LIKE' , "%$request->user_name%")->get();
+
+        return response()->json(UserResource::collection($dataUser), 200);
+    }
+
 }

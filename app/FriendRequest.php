@@ -10,4 +10,6 @@ class FriendRequest extends Model
         'user_id', 'friend_id', 'status',
     ];
 
+    
+
 }

@@ -27,6 +27,7 @@ Route::group(['middleware' => 'jwt.auth'], function() {
 		Route::post('postNewsFeed', 'PostMultiController@postNewsFeed');
 		Route::post('updateActionStatus', 'PostMultiController@updateActionStatus');
 		Route::post('deletePost', 'PostMultiController@deletepost');
+		Route::post('updatePost', 'PostMultiController@updatePost');
 
 	});
 	Route::prefix('user')->group(function () {
@@ -40,6 +41,10 @@ Route::group(['middleware' => 'jwt.auth'], function() {
 		Route::post('getUserByUid', 'AuthController@getUserByUid');
 		Route::post('uploadImage', 'GallaryController@uploadImage');
 		Route::post('addCommentToPost', 'CommentController@addCommentToPost');
+		Route::post('searchUser', 'AuthController@searchUser');
+		Route::get('getRequestFriend', 'FriendShipController@getRequestFriend');
+		Route::post('appendFriends', 'FriendShipController@appendFriends');
+		Route::post('miunusFriends', 'FriendShipController@miunusFriends');
 	});
 
 	Route::post('getMyInfo', 'AuthController@me');
