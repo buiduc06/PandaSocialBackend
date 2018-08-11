@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -137,4 +137,57 @@ public function getListRemoveFriends()
     $listIdExclusion = array_unique(array_merge($this->getListFriends(), $this->getTheInvitationList(), $this->getListFriendSent()));
     return $listIdExclusion;
 }
+
+public function getListMeta()
+{
+    return UserMetas::where('user_id', $this->id)->first();
+}
+public function getDataFriend()
+{
+    $dataFriends = FriendShip::where('user_id', $this->id)->select('friend_id')->get();
+    if (!empty($dataFriends) && count($dataFriends)>0) {
+       $ckunit ='';
+       foreach ($dataFriends as $dataT) {
+        $ckunit .=$dataT->friend_id.',';
+    }
+    $listIdFriendUsers = array_map('intval', explode(',', trim($ckunit, ',')));
+
+    $data = self::whereIn('id', $listIdFriendUsers)->select('uid_user', 'id', 'name')->get();
+
+    foreach ($data as $value) {
+        $dataF[] = [
+            'uid_user'  =>$value->uid_user,
+            'avatar'    =>$value->getAvatar(),
+            'name'      =>$value->name,
+        ];
+    }
+    return $dataF;
+
+}
+// }
+return '';
+
+}
+public function getListImage($num=4)
+{
+    $data = Gallary::where('user_id', $this->id)->select('image')->limit($num)->get();
+    if (!empty($data) && count($data)>0) {
+        foreach ($data as $value) {
+            $dataGallary[] = url('uploads/'.$value->image);
+     }
+     return $dataGallary;
+ }
+ return '';
+
+}
+
+public function isMyProfile()
+{
+    $user = JWTAuth::parseToken()->authenticate();
+    if ($this->id == $user['id']) {
+       return true;
+    }
+    return false;
+}
+
 }

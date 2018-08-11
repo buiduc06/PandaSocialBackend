@@ -39,6 +39,7 @@ Route::group(['middleware' => 'jwt.auth'], function() {
 		Route::get('getMyPost', 'PostMultiController@getMyPost');
 		Route::post('getPostByUid', 'PostMultiController@getPostByUid');
 		Route::post('getUserByUid', 'AuthController@getUserByUid');
+		Route::post('getDataUserByUid', 'AuthController@getDataUserByUid');
 		Route::post('uploadImage', 'GallaryController@uploadImage');
 		Route::post('addCommentToPost', 'CommentController@addCommentToPost');
 		Route::post('searchUser', 'AuthController@searchUser');

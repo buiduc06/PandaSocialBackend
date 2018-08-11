@@ -8,6 +8,7 @@ use App\UserMetas;
 use JWTFactory;
 use Validator;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ProfileUserResource;
 class AuthController extends Controller
 {
     /**
@@ -28,11 +29,11 @@ class AuthController extends Controller
             'password'=> 'required'
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 404);
         }
 
         $fullname = $request->firstname.' '.$request->lastname;
-        $user = User::create([
+        $user_data = User::create([
             // 'name' => $request->get('name'),
             'name' => $fullname,
             'email' => $request->get('email'),
@@ -41,14 +42,14 @@ class AuthController extends Controller
         ]);
         
         UserMetas::create([
-            'user_id'   =>  $users->id,
+            'user_id'   =>  $user_data->id,
             'firstname' =>  $request->firstname,
             'lastname'  =>  $request->lastname,
             'gender'    =>  $request->gender,
         ]);
 
         // return response()->json(compact('user'));
-        return response()->json($users->id, 200);
+        return response()->json(['tạo tài khoản và đăng kí thành công'], 200);
     }
 
     public function login(Request $request)
@@ -94,9 +95,22 @@ class AuthController extends Controller
     public function searchUser(request $request)
     {
         $user = $this->jwtAuth->parseToken()->authenticate();
-        $dataUser = User::where('id', '!=' , $user['id'])->where('name','LIKE' , "%$request->user_name%")->get();
+        $dataUser = User::where('id', '!=' , $user['id'])->where('name','LIKE' , "%$request->user_name%")->get()->unique();
 
         return response()->json(UserResource::collection($dataUser), 200);
+    }
+
+
+    public function getDataUserByUid(request $request)
+    {
+
+        $dataU = User::where('uid_user',  $request['uid_user'])->first();
+
+        if (!empty($dataU)) {
+            $data = new ProfileUserResource($dataU);
+            return response($data);
+        }
+        return response(404);
     }
 
 }

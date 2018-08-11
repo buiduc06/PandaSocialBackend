@@ -35,17 +35,24 @@ class PostMultiController extends Controller
 
     public function getNewsFeed(request $request)
     {
+        // lấy bài viết của chính bạn và bạn bè của bạn
         if (isset($request['page']) && !empty($request['page'])) {
             $taken = $request['page'];
         }else{
             $taken = 0;
         }
-        $data = PostResource::collection(PostMulti::OrderBy('id', 'DESC')->skip($taken)->take(5)->get());
-        return response()->json($data, 200);
-    }
+        $listFriend = User::find($this->useId);
+        $listArrIdFriend = array_merge($listFriend->getListFriends(), [$this->useId]);
+        if (count($listArrIdFriend)>=2) {
+            $data = PostResource::collection(PostMulti::whereIn('pms_user_id', $listArrIdFriend)->OrderBy('id', 'DESC')->skip($taken)->take(5)->get()->shuffle());
+        }else{
+         $data = PostResource::collection(PostMulti::where('pms_user_id', $this->useId)->OrderBy('id', 'DESC')->skip($taken)->take(5)->get());
+     }
+     return response()->json($data, 200);
+ }
 
-    public function postNewsFeed(request $request)
-    {
+ public function postNewsFeed(request $request)
+ {
      $data =  PostMulti::create([
         'pms_user_id'       => $this->useId,
         'pms_summary'       => $request->summary,
@@ -113,14 +120,14 @@ public function deletePost(request $request)
     $deleteAction = actionWithPost::where('awp_post_id', $request->id)->first();
     $deleteComment = comment::where('cm_post_id', $request->id)->first();
     if ($deleteAction) {
-         $deleteAction->delete();
-    }
-    if ($deleteComment) {
-         $deleteComment->delete();
-    }
-    
-    $checkdata = PostMulti::findOrFail($request->id)->delete();
-    return response()->json($request->id);
+     $deleteAction->delete();
+ }
+ if ($deleteComment) {
+     $deleteComment->delete();
+ }
+
+ $checkdata = PostMulti::findOrFail($request->id)->delete();
+ return response()->json($request->id);
 }
 
 public function getMyPost()

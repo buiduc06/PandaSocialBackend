@@ -78,13 +78,22 @@ class FriendShipController extends Controller
 
 	public function getRequestFriend()
 	{
-		$getData = User::join('friend_requests', 'friend_requests.friend_id' , '=', 'users.id')->where('friend_id', $this->useId)->select('users.*')->get();
-		 
-		// if (!empty($getData)) {
-		// 	return response()->json(['msg' => 'không có users nào'], 404);
-		// }else{
-			return response()->json(UserResource::collection($getData), 200);
-		// }
+		// lay danh sach loi moi
+		$getData = User::join('friend_requests', 'friend_requests.friend_id' , '=', 'users.id')->where('friend_id', $this->useId)->select('friend_requests.*')->get();
+		if (!empty($getData) && count($getData)>0) {
+			$idd ='';
+			foreach ($getData as $keyU) {
+				$idd .=$keyU->user_id.',';
+			}
+			if (count($getData)== 1) {
+				$dta = User::where('id', trim($idd, ','))->get();
+				return response()->json($dta, 200);
+			}else{
+				$dta = User::whereIn('id', trim($idd, ','))->get();
+				return response()->json(UserResource::collection($dta), 200);
+			}
+		}
+		return response()->json($getData);
 	}
 
 	public function appendFriends(request $request)

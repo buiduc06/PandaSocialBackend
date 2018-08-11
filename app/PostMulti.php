@@ -61,4 +61,5 @@ class PostMulti extends Model
 		$data = comment::where('cm_post_id', $this->id)->count();
 		return $data;
 	}
+	 
 }

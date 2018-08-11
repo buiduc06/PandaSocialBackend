@@ -21,6 +21,7 @@ class UserResource extends Resource
             'email'     => $this->email,
             'uid_user'  => $this->uid_user,
             'avatar'    => $this->getAvatar(),
+            'isMydata'  => $this->isMyProfile(),
         ];
     }
 }
