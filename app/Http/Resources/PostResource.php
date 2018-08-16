@@ -16,6 +16,7 @@ class PostResource extends Resource
     {
         return [
             'post_id'           => $this->id,
+            'created_at'        => $this->getDateCreatePost(),
             'summary'           => $this->pms_summary,
             'content'           => $this->pms_content,
             'user_tag_id'       => $this->pms_user_tag_id,

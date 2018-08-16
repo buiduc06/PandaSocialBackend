@@ -33,8 +33,6 @@ class GallaryController extends Controller
  }
  // }
 
- 
-
  return response()->json($returnData, 200);
          // return response()->json( $rq->post_id);
 }

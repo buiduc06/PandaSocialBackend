@@ -85,11 +85,13 @@ class FriendShipController extends Controller
 			foreach ($getData as $keyU) {
 				$idd .=$keyU->user_id.',';
 			}
-			if (count($getData)== 1) {
+			// return response()->json($idd, 200);
+			if (count($getData)<= 1) {
 				$dta = User::where('id', trim($idd, ','))->get();
-				return response()->json($dta, 200);
+				return response()->json(UserResource::collection($dta), 200);
 			}else{
-				$dta = User::whereIn('id', trim($idd, ','))->get();
+				$idArr = array_map('intval', explode(',', trim($idd, ',')));	
+				$dta = User::whereIn('id', $idArr)->get();
 				return response()->json(UserResource::collection($dta), 200);
 			}
 		}
@@ -114,6 +116,28 @@ class FriendShipController extends Controller
 	{
 		$getData = FriendRequest::where('user_id', $request->user_id)->get();
 		return response()->json($request->user_id, 200);
+	}
+	public function deleteFriends(request $request)
+	{
+		$getData = FriendShip::where('user_id', $request->user_id)->where('friend_id', $this->useId)->first();
+		$getData1 = FriendShip::where('user_id', $this->useId)->where('friend_id', $request->user_id)->first();
+		if (!empty($getData) && !empty($getData1)) {
+			$getData->delete();
+			$getData1->delete();
+			return response()->json(['msg'=>'hủy kết bạn thành công'], 200);
+		}
+		return response()->json(['msg'=>'xóa ko thành công'], 404);
+		// hủy kết bạn
+	}
+	public function cancelFriends(request $request)
+	{
+		// hủy lời mời kết bạn
+		$getData1 = FriendRequest::where('user_id', $this->useId)->where('friend_id', $request->user_id)->first();
+		if (!empty($getData1)) {
+			$getData1->delete();
+			return response()->json(['msg'=>'hủy kết bạn thành công'], 200);
+		}
+		return response()->json(['msg'=>'xóa ko thành công'], 404);
 	}
 
 }

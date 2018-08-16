@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\JWTAuth;
@@ -8,7 +9,9 @@ use App\UserMetas;
 use JWTFactory;
 use Validator;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\GallaryResource;
 use App\Http\Resources\ProfileUserResource;
+use Hash;
 class AuthController extends Controller
 {
     /**
@@ -112,5 +115,59 @@ class AuthController extends Controller
         }
         return response(404);
     }
+    public function getListFriends()
+    {
+     $user = $this->jwtAuth->parseToken()->authenticate();
+     $data = User::find($user['id'])->getListFriends2();
+     $dataFriends = User::whereIn('id', $data)->get();
+     return response()->json(UserResource::collection($dataFriends), 200);
+ }
+ public function changePassword(request $request)
+ {
+    $user = $this->jwtAuth->parseToken()->authenticate();
+    $userChange = User::findOrFail($user['id']);
+    if (Hash::check($request['current_password'], $userChange->password)) {
+       $pws = Hash::make($request['password']);
+       $userChange->update([
+        'password'=>$pws
+    ]);
+       return response()->json(200);
+   }
+   return response()->json(['msg'=>'mật khẩu cũ không chính xác'] ,404);
+
+}
+public function changeAvatar(request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'upload' => 'required|image',
+    ],[
+        'upload.required'=>'vui lòng chọn file của bạn',
+        'upload.image'=>'định dạng ảnh ko hợp lệ',
+    ]);
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 404);
+    }
+
+
+    $user = $this->jwtAuth->parseToken()->authenticate();
+    $userChange = User::findOrFail($user['id']);
+    $user_id = $user['id'];
+    $dataChane = UserMetas::where('user_id', $user_id)->first();
+ $uploadPath = public_path('/uploads'); // Thư mục upload
+
+ $fileExtension =  $request['upload']->getClientOriginalExtension(); 
+ $fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
+ $request['upload']->move($uploadPath, $fileName);
+ if ($request['type'] =='avatar') {
+   $dataChane->update([
+    'avatar'     => $fileName,
+]);
+}else{
+  $dataChane->update([
+    'banner'     => $fileName,
+]);
+}
+return response()->json($dataChane->getAvatar(), 200);
+}
 
 }

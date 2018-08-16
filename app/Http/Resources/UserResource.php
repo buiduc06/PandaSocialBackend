@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
@@ -21,7 +20,10 @@ class UserResource extends Resource
             'email'     => $this->email,
             'uid_user'  => $this->uid_user,
             'avatar'    => $this->getAvatar(),
+            'cover'    => $this->getCover(),
             'isMydata'  => $this->isMyProfile(),
+            'generalFriends' =>$this->generalFriends(),
+            'isMyfriends'=>$this->isMyfriends(),
         ];
     }
 }

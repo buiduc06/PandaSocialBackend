@@ -32,9 +32,17 @@ class User extends Authenticatable
     {
         $avatar = UserMetas::where('user_id', $this->id)->first(['avatar']);
         if (!empty($avatar->avatar)) {
-            return url('images/'.$avatar->avatar);
+            return url('uploads/'.$avatar->avatar);
         }
         return url('images/default.png');
+    }
+    public function getCover()
+    {
+        $avatar = UserMetas::where('user_id', $this->id)->first(['banner']);
+        if (!empty($avatar->banner)) {
+            return url('uploads/'.$avatar->banner);
+        }
+        return url('images/top-header1.jpg');
     }
 //     public function getListIdUserFriends()
 //     {
@@ -99,6 +107,21 @@ class User extends Authenticatable
     return [$this->id];
 }
 
+public function getListFriends2()
+{
+        // / lấy danh sách bạn bè 
+   $dataFriends = FriendShip::where('user_id', $this->id)->select('friend_id')->get();
+   if (!empty($dataFriends) && count($dataFriends)>0) {
+       $ckunit ='';
+       foreach ($dataFriends as $dataT) {
+        $ckunit .=$dataT->friend_id.',';
+    }
+    $listIdFriendUsers = array_map('intval', explode(',', trim($ckunit, ',')));
+    return $listIdFriendUsers;
+}
+return null;
+}
+
 public function getTheInvitationList()
 {
     // layDanhSachLoiMoiKetBan
@@ -159,6 +182,7 @@ public function getDataFriend()
             'uid_user'  =>$value->uid_user,
             'avatar'    =>$value->getAvatar(),
             'name'      =>$value->name,
+            'genFriend'=>$value->generalFriends(),
         ];
     }
     return $dataF;
@@ -174,10 +198,10 @@ public function getListImage($num=4)
     if (!empty($data) && count($data)>0) {
         foreach ($data as $value) {
             $dataGallary[] = url('uploads/'.$value->image);
-     }
-     return $dataGallary;
- }
- return '';
+        }
+        return $dataGallary;
+    }
+    return '';
 
 }
 
@@ -186,8 +210,39 @@ public function isMyProfile()
     $user = JWTAuth::parseToken()->authenticate();
     if ($this->id == $user['id']) {
        return true;
-    }
-    return false;
+   }
+   return false;
 }
 
+public function generalFriends()
+{
+    if ($this->getListFriends() != [$this->id]) {
+        $user = JWTAuth::parseToken()->authenticate();
+        $myData = User::find($user['id']);
+        $myFriend = $myData->getListFriends();
+        $itFriend = $this->getListFriends();
+
+        $sumArray = array_merge($myFriend, $itFriend);
+        $countFriend = array_diff_key($sumArray, array_unique($sumArray));
+        return count($countFriend);
+    }
+    return 0;
+}
+public function isMyfriends()
+{
+ $user = JWTAuth::parseToken()->authenticate();
+ $myData = User::find($user['id']);
+ if (in_array($this->id, $myData->getListFriends())) {
+    return 'friend';
+ }
+ if (in_array($this->id, $myData->getListFriendSent())) {
+    // toi da gui ket ban
+    return 'sendfriend';
+ }
+ if (in_array($this->id, $myData->getTheInvitationList())) {
+    // cho toi xac nhan ban be
+    return 'pendingfriend';
+ }
+ return 'notfriend';
+}
 }

@@ -61,5 +61,9 @@ class PostMulti extends Model
 		$data = comment::where('cm_post_id', $this->id)->count();
 		return $data;
 	}
+	public function getDateCreatePost()
+	{
+		return $this->created_at->format('d/m H:s');
+	}
 	 
 }

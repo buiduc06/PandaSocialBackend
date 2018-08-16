@@ -3,83 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\UserMetas;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserMetasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+	public $useId;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	function __construct()
+	{
+		$user = JWTAuth::parseToken()->authenticate();
+		if (!$user) {
+			return response()->json(404);
+		}else{
+			$this->useId = $user['id'];
+		}
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\UserMetas  $userMetas
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserMetas $userMetas)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\UserMetas  $userMetas
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserMetas $userMetas)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\UserMetas  $userMetas
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, UserMetas $userMetas)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\UserMetas  $userMetas
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserMetas $userMetas)
-    {
-        //
-    }
+	public function changeMyInfo(request $request)
+	{
+		$dataUser = UserMetas::where('user_id', $this->useId)->first();
+		$UpdateUser = User::find($this->useId);
+		$UpdateUser->update([
+			'name'=>$request->lastname.' '.$request->firstname,
+		]);
+		$dataUser->update($request->all());
+		return response()->json($request, 200);
+	}
+	public function getMetaMyInfo()
+	{
+		$dataUser = UserMetas::where('user_id', $this->useId)->first();
+		return response()->json($dataUser, 200);
+	}
 }
