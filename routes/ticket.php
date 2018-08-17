@@ -16,4 +16,5 @@ Route::get('getlistcategory', 'TicketProductController@index');
 Route::get('getlistcategory', function () {
     return response()->json(ticket_category::all(), 200);
 });
-Route::get('findRoomById', 'TicketProductController@findRoomById');
+// Route::get('findRoomById', 'TicketProductController@findRoomById');
+Route::get('findroombyid', 'TicketProductController@findRoomById');
