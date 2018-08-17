@@ -12,3 +12,5 @@
 */
 
 Route::get('getlistRoom', 'TicketProductController@index');
+Route::get('getlistcategory', 'TicketProductController@index');
+Route::get('findRoomById', 'TicketProductController@findRoomById');

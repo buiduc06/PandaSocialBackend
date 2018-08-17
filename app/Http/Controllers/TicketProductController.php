@@ -17,4 +17,9 @@ class TicketProductController extends Controller
     {
         return response()->json(TicketResource::collection(ticket_product::all()), 200);
     }
+
+    public function findRoomById(request $request)
+    {
+        return response()->json(new TicketResource(ticket_product::find($request->id)), 200);
+    }
 }
