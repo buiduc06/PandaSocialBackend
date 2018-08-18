@@ -37,6 +37,9 @@ class TicketProductController extends Controller
         if (!empty($request->typeroom)) {
              $model->where('cate_id', $request->typeroom);
         }
+        if (!empty($request->amount1) && !empty($request->amount2)) {
+             $model->whereBetween('price', [trim($request->amount1, '$'), trim($request->amount2, '$')]);
+        }
         return response()->json(TicketResource::collection($model->get()), 200);
     }
 }
