@@ -18,12 +18,13 @@ class UserResource extends Resource
             'id'        => $this->id,
             'name'      => $this->name,
             'email'     => $this->email,
-            'uid_user'  => $this->uid_user,
+            'uid_user'  => (int) $this->uid_user,
             'avatar'    => $this->getAvatar(),
             'cover'    => $this->getCover(),
             'isMydata'  => $this->isMyProfile(),
             'generalFriends' =>$this->generalFriends(),
             'isMyfriends'=>$this->isMyfriends(),
+            'channel'=> $this->getPrivateChannel()
         ];
     }
 }

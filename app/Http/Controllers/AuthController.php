@@ -12,6 +12,7 @@ use App\Http\Resources\UserResource;
 use App\Http\Resources\GallaryResource;
 use App\Http\Resources\ProfileUserResource;
 use Hash;
+
 class AuthController extends Controller
 {
     /**
@@ -41,7 +42,7 @@ class AuthController extends Controller
             'name' => $fullname,
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password')),
-            'uid_user' => rand(100000000,999999999),
+            'uid_user' => rand(100000000, 999999999),
         ]);
         
         UserMetas::create([
@@ -90,7 +91,7 @@ class AuthController extends Controller
     public function getUserByUid(request $request)
     {
 
-        $dataU = User::where('uid_user',  $request['uid_user'])->first();
+        $dataU = User::where('uid_user', $request['uid_user'])->first();
         $data = new UserResource($dataU);
         return response($data);
     }
@@ -98,7 +99,7 @@ class AuthController extends Controller
     public function searchUser(request $request)
     {
         $user = $this->jwtAuth->parseToken()->authenticate();
-        $dataUser = User::where('id', '!=' , $user['id'])->where('name','LIKE' , "%$request->user_name%")->get()->unique();
+        $dataUser = User::where('id', '!=', $user['id'])->where('name', 'LIKE', "%$request->user_name%")->get()->unique();
 
         return response()->json(UserResource::collection($dataUser), 200);
     }
@@ -107,7 +108,7 @@ class AuthController extends Controller
     public function getDataUserByUid(request $request)
     {
 
-        $dataU = User::where('uid_user',  $request['uid_user'])->first();
+        $dataU = User::where('uid_user', $request['uid_user'])->first();
 
         if (!empty($dataU)) {
             $data = new ProfileUserResource($dataU);
@@ -117,57 +118,55 @@ class AuthController extends Controller
     }
     public function getListFriends()
     {
-     $user = $this->jwtAuth->parseToken()->authenticate();
-     $data = User::find($user['id'])->getListFriends2();
-     $dataFriends = User::whereIn('id', $data)->get();
-     return response()->json(UserResource::collection($dataFriends), 200);
- }
- public function changePassword(request $request)
- {
-    $user = $this->jwtAuth->parseToken()->authenticate();
-    $userChange = User::findOrFail($user['id']);
-    if (Hash::check($request['current_password'], $userChange->password)) {
-       $pws = Hash::make($request['password']);
-       $userChange->update([
-        'password'=>$pws
-    ]);
-       return response()->json(200);
-   }
-   return response()->json(['msg'=>'mật khẩu cũ không chính xác'] ,404);
-
-}
-public function changeAvatar(request $request)
-{
-    $validator = Validator::make($request->all(), [
+        $user = $this->jwtAuth->parseToken()->authenticate();
+        $data = User::find($user['id'])->getListFriends2();
+        $dataFriends = User::whereIn('id', $data)->get();
+        return response()->json(UserResource::collection($dataFriends), 200);
+    }
+    public function changePassword(request $request)
+    {
+        $user = $this->jwtAuth->parseToken()->authenticate();
+        $userChange = User::findOrFail($user['id']);
+        if (Hash::check($request['current_password'], $userChange->password)) {
+            $pws = Hash::make($request['password']);
+            $userChange->update([
+              'password'=>$pws
+            ]);
+            return response()->json(200);
+        }
+        return response()->json(['msg'=>'mật khẩu cũ không chính xác'], 404);
+    }
+    public function changeAvatar(request $request)
+    {
+        $validator = Validator::make($request->all(), [
         'upload' => 'required|image',
-    ],[
+        ], [
         'upload.required'=>'vui lòng chọn file của bạn',
         'upload.image'=>'định dạng ảnh ko hợp lệ',
-    ]);
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 404);
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 404);
+        }
+
+
+        $user = $this->jwtAuth->parseToken()->authenticate();
+        $userChange = User::findOrFail($user['id']);
+        $user_id = $user['id'];
+        $dataChane = UserMetas::where('user_id', $user_id)->first();
+        $uploadPath = public_path('/uploads'); // Thư mục upload
+
+        $fileExtension =  $request['upload']->getClientOriginalExtension();
+        $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
+        $request['upload']->move($uploadPath, $fileName);
+        if ($request['type'] =='avatar') {
+            $dataChane->update([
+              'avatar'     => $fileName,
+            ]);
+        } else {
+            $dataChane->update([
+            'banner'     => $fileName,
+            ]);
+        }
+        return response()->json($dataChane->getAvatar(), 200);
     }
-
-
-    $user = $this->jwtAuth->parseToken()->authenticate();
-    $userChange = User::findOrFail($user['id']);
-    $user_id = $user['id'];
-    $dataChane = UserMetas::where('user_id', $user_id)->first();
- $uploadPath = public_path('/uploads'); // Thư mục upload
-
- $fileExtension =  $request['upload']->getClientOriginalExtension(); 
- $fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
- $request['upload']->move($uploadPath, $fileName);
- if ($request['type'] =='avatar') {
-   $dataChane->update([
-    'avatar'     => $fileName,
-]);
-}else{
-  $dataChane->update([
-    'banner'     => $fileName,
-]);
-}
-return response()->json($dataChane->getAvatar(), 200);
-}
-
 }
