@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class category extends Model
 {
+    use TraitMain;
     protected $table = 'categories';
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
@@ -26,8 +27,14 @@ class category extends Model
         return 'trống';
     }
 
-    public function scopeActive($query)
+
+    public function scopeParents($query)
     {
-        return $query->where('status', 1);
+        return $query->where('parent_id', 0);
+    }
+
+    public function dashbroandCount()
+    {
+        return $this::Active()->select('id')->count();
     }
 }

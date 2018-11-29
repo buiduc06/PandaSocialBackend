@@ -39,7 +39,7 @@
 						@endforeach
 					</select>
 					@if(count($errors) > 0)
-					<span class="help-block text-danger"><small>{{$errors->first('name')}}</small></span>
+					<span class="help-block text-danger"><small>{{$errors->first('parent_id')}}</small></span>
 					@endif
 				</div>
 				@endif

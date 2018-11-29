@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class course extends Model
 {
+    use TraitMain;
     protected $table = 'courses';
 
     protected $fillable = [

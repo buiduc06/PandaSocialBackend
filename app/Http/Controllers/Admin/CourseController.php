@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\course;
+use App\category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,10 +14,38 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cources = course::Active()->with(['category', 'video', 'adminUser'])->paginate(30);
-        return view('admin.course.index', compact('cources'));
+        $route_create       = 'admin.course.create';
+        $route_edit         = 'admin.course.edit';
+        $route_destroy      = 'admin.course.destroy';
+
+        $model = course::with(['video', 'category', 'adminUser']);
+
+        if ($request->filled('perpage')) {
+            $perpage = $request->perpage;
+        } else {
+            $perpage = 5;
+        }
+        if ($request->filled('title')) {
+            $model->where('title', 'like', '%'.$request->name.'%');
+        }
+
+        if ($request->filled('status')) {
+            $model->where('status', $request->status);
+        }
+
+        $cources = $model->paginate($perpage);
+
+        return view(
+            'admin.course.index',
+            compact(
+                'cources',
+                'route_destroy',
+                'route_create',
+                'route_edit'
+            )
+        );
     }
 
     /**
@@ -26,7 +55,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('admin.course.create');
+        $categories = category::Active()->select('id', 'name')->get();
+        return view('admin.course.create', compact('categories'));
     }
 
     /**

@@ -3,10 +3,10 @@
 $controller = 'Admin\\AdminController@';
 $routeName = 'admin';
 Route::get('/', $controller.'index')->name($routeName);
-Route::get('/list-user', $controller.'getListUser')->name($routeName.'.getListUser');
+ 
 
-Route::get('users/getData', $controller.'getData')->name('users.getData');
-Route::get('users', $controller.'getManagerUser');
+// Route::get('users/getData', $controller.'getData')->name('users.getData');
+// Route::get('users', $controller.'getManagerUser');
 
 
 ######################################## course ########################################
@@ -40,5 +40,20 @@ Route::group(['prefix' => 'category'], function () {
     Route::get('/edit-category/{id?}', $controller.'edit')->name($routeName.'.edit');
     Route::post('/edit-category', $controller.'update')->name($routeName.'.update');
     Route::post('/delete-category', $controller.'destroy')->name($routeName.'.destroy');
+});
+###################################### End course ########################################
+
+
+######################################## manager user ########################################
+
+Route::group(['prefix' => 'user'], function () {
+
+    $controller = 'Admin\\ManagerUserControlelr@';
+    $routeName = 'admin.manager_user';
+
+    Route::get('/list-user', $controller.'index')->name($routeName.'.index');
+    Route::get('/', $controller.'index')->name($routeName);
+    Route::get('/index', $controller.'index')->name($routeName.'.index');
+    Route::post('/block-user', $controller.'destroy')->name($routeName.'.destroy');
 });
 ###################################### End course ########################################

@@ -8,6 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class User extends Authenticatable
 {
+    use TraitMain;
     use Notifiable;
     protected $table = 'users';
     /**
@@ -19,7 +20,7 @@ class User extends Authenticatable
     // thông tin đăng nhập của admin ở bảng admin_users
     protected $primaryKey = 'id';
     protected $fillable = [
-        'name', 'email', 'password', 'uid_user','status_online'
+        'name', 'email', 'password', 'uid_user','status_online', 'status'
     ];
 
 
@@ -254,5 +255,25 @@ class User extends Authenticatable
             return (int)$this->uid_user+ (int)$user['uid_user'];
         }
         return null;
+    }
+
+    // ==== relation ship
+    public function userMeta()
+    {
+        return $this->belongsTo('App\UserMetas', 'id', 'user_id');
+    }
+    public function comment()
+    {
+        return $this->hasMany('App\Comment', 'id', 'cm_user_id');
+    }
+    public function gallary()
+    {
+        return $this->hasMany('App\Gallary', 'id', 'user_id');
+    }
+
+
+    public function blockUser()
+    {
+        return $this->update([ 'status'=>2 ]);
     }
 }

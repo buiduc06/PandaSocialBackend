@@ -1,69 +1,99 @@
-@extends('layouts.app')
+
+@extends('admin.auth.main')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(/assets/images/background/login-register.jpg) no-repeat center center;">
+    <div class="auth-box on-sidebar">
+        <div id="loginform">
+            <div class="logo">
+                <span class="db"><img src="/assets/images/logo-icon.png" alt="logo" /></span>
+                <h5 class="font-medium m-b-20">Sign In to Admin</h5>
+            </div>
+            <!-- Form -->
+            <div class="row">
+                <div class="col-12">
+                    <form class="form-horizontal m-t-20" id="loginform" method="POST" action="{{ route('login') }}">
+                     {{ csrf_field() }}
+                     @if ($errors->has('email'))
+                     <small class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </small>
+                    @endif
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                        </div>
+                        <input type="email" name="email" value="{{ old('email') }}" required autofocus class="form-control form-control-lg" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                        
+                    </div>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                    @if ($errors->has('password'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                    @endif 
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+                        </div>
+                        <input type="password" class="form-control form-control-lg" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="customCheck1">Remember me</label>
+                                <a href="javascript:void(0)" href="{{ route('password.request') }}" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="col-xs-12 p-b-20">
+                            <button class="btn btn-block btn-lg btn-info" type="submit">Log In</button>
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="form-group m-b-0 m-t-10">
+                        <div class="col-sm-12 text-center">
+                            Don't have an account? <a href="{{route('register')}}" class="text-info m-l-5"><b>Sign Up</b></a>
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+    <div id="recoverform">
+        <div class="logo">
+            <span class="db"><img src="/assets/images/logo-icon.png" alt="logo" /></span>
+            <h5 class="font-medium m-b-20">Recover Password</h5>
+            <span>Enter your Email and instructions will be sent to you!</span>
+        </div>
+        <div class="row m-t-20">
+            <!-- Form -->
+            <form class="col-12" method="POST" action="{{ route('password.email') }}">
+                <!-- email -->
+
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input class="form-control form-control-lg" type="email" name="email" value="{{ old('email') }}" required placeholder="Email">
+                    </div>
+                </div>
+                @if ($errors->has('email'))
+                <small class="help-block">
+                    <strong>{{ $errors->first('email') }}</strong>
+                </small>
+                @endif
+                <!-- pwd -->
+                <div class="row m-t-20">
+                    <div class="col-12">
+                        <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 @endsection

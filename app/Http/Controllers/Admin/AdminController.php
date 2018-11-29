@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 use App\User;
+use App\category;
+use App\course;
+use App\video;
 
 class AdminController extends Controller
 {
@@ -16,13 +19,15 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashbroand.index');
+        $count_user = User::Active()->count();
+        $count_category = category::Active()->count();
+        $count_course = course::Active()->count();
+        $count_video = video::Active()->count();
+
+        return view('admin.dashbroand.index', compact('count_user', 'count_category', 'count_course', 'count_video'));
     }
 
-    public function getListUser()
-    {
-        return view('admin.dashbroand.index');
-    }
+ 
     /**
      * Show the form for creating a new resource.
      *

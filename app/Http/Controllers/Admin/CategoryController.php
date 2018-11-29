@@ -56,7 +56,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = category::Active()->select('id', 'name')->get();
+        $categories = category::Active()->Parents()->select('id', 'name')->get();
         return view('admin.category.create', compact('categories'));
     }
 
@@ -125,7 +125,7 @@ class CategoryController extends Controller
 
         if ($request->id) {
             $find_cate = category::findOrFail($request->id);
-            $categories = category::Active()->select('id', 'name')->get();
+            $categories = category::Active()->Parents()->select('id', 'name')->get();
             return view('admin.category.edit', compact('find_cate', 'categories'));
         }
 

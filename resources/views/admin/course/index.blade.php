@@ -1,66 +1,64 @@
 @extends('admin.layouts.main')
 @section('content')
-
+<style type="text/css" media="screen">
+	*{
+		font-family: 'Roboto';
+	}
+</style>
 
 <div class="container-fluid table_custom">
 	<div class="table-wrapper table_custom">
 		<div class="table-title">
 			<div class="row">
 				<div class="col-sm-6">
-					<h2>Danh sách các khóa học</h2>
+					<h2>Danh Sách Khóa Học</h2>
 				</div>
 				<div class="col-sm-6">
-					<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm khóa học mới</span></a>
-					<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
+					<a href="{{route($route_create)}}" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm khóa học mới</span></a>
+					<a href="#deleteEmployeeModal" class="btn btn-danger delete_mute"><i class="material-icons">&#xE15C;</i> <span class="mr-1">Delete</span>
+						<span class='number_delete check_number_delete'></span>
+					</a>
 				</div>
 			</div>
 		</div>
 
-		<div class="table-filter">
-				<div class="row">
-                    <div class="col-sm-3">
-						<div class="show-entries">
-							<span>Show</span>
-							<select class="form-control">
-								<option>5</option>
-								<option>10</option>
-								<option>15</option>
-								<option>20</option>
-							</select>
-							<span>entries</span>
-						</div>
+		<form class="table-filter" action="" method="GET" id="filter_form">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="show-entries">
+						<span>Show</span>
+						<select class="form-control change_filter" name="perpage">
+							@foreach(foo_show_pg() as $item)
+							<option value="{{$item}}"
+							{{Request::get('perpage') == $item ? 'selected' : ''}}
+							>{{$item}}</option>
+							@endforeach
+						</select>
+						<span>entries</span>
 					</div>
-                    <div class="col-sm-9">
-						<button type="button" class="btn btn-primary float-right"><i class="fa fa-search"></i></button>
-						<div class="filter-group">
-							<label>Name</label>
-							<input type="text" class="form-control">
-						</div>
-						<div class="filter-group">
-							<label>Location</label>
-							<select class="form-control">
-								<option>All</option>
-								<option>Berlin</option>
-								<option>London</option>
-								<option>Madrid</option>
-								<option>New York</option>
-								<option>Paris</option>								
-							</select>
-						</div>
-						<div class="filter-group">
-							<label>Status</label>
-							<select class="form-control">
-								<option>Any</option>
-								<option>Delivered</option>
-								<option>Shipped</option>
-								<option>Pending</option>
-								<option>Cancelled</option>
-							</select>
-						</div>
-						<span class="filter-icon"><i class="fa fa-filter"></i></span>
-                    </div>
-                </div>
+				</div>
+				<div class="col-sm-9">
+					<button type="submit" class="btn btn-primary float-right"><i class="fa fa-search"></i></button>
+					<div class="filter-group">
+						<label>Name</label>
+						<input type="text" class="form-control change_filter" name="name" value="{{Request::get('name')}}">
+					</div>
+
+					<div class="filter-group">
+						<label>Status</label>
+						<select class="form-control change_filter" name="status">
+							<option value="" selected>chọn</option>
+							@foreach(foo_status() as $key => $item)
+							<option value="{{$key}}"
+							{{Request::get('status') == $key && !empty(Request::get('status'))? 'selected' : ''}}
+							>{{$item}}</option>
+							@endforeach
+						</select>
+					</div>
+					<span class="filter-icon"><i class="fa fa-filter"></i></span>
+				</div>
 			</div>
+		</form>
 
 		<table class="table table-striped table-hover">
 			<thead>
@@ -99,109 +97,35 @@
 					<td>{{empty($cource->video) ? 0 : count($cource->video)}}</td>
 					<td>{{convertDate($cource->created_at)}}</td>
 					<td>
-						<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-						<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+						<a href="{{route($route_edit)}}/{{$cource->id}}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+						<a href="javascript:;" data-id="{{$cource->id}}" class="delete delete_one"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 					</td>
 				</tr>
 				@endforeach
 			</tbody>
 		</table>
+
 		<div class="clearfix">
-			<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-			<ul class="pagination">
-				<li class="page-item disabled"><a href="#">Previous</a></li>
-				<li class="page-item"><a href="#" class="page-link">1</a></li>
-				<li class="page-item"><a href="#" class="page-link">2</a></li>
-				<li class="page-item active"><a href="#" class="page-link">3</a></li>
-				<li class="page-item"><a href="#" class="page-link">4</a></li>
-				<li class="page-item"><a href="#" class="page-link">5</a></li>
-				<li class="page-item"><a href="#" class="page-link">Next</a></li>
-			</ul>
+			<div class="hint-text">Showing <b>{{$cources->currentPage()}}</b> out of <b>{{$cources->total()}}</b> entries</div>
+			{{$cources->links('pagination::custome-pg')}}
 		</div>
 	</div>
 </div>
 
-<div id="addEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Add Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">					
-					<div class="form-group">
-						<label>Name</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input type="email" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Address</label>
-						<textarea class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" required>
-					</div>					
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-success" value="Add">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Edit Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">					
-					<div class="form-group">
-						<label>Name</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input type="email" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Address</label>
-						<textarea class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" required>
-					</div>					
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-info" value="Save">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+
 <!-- Delete Modal HTML -->
 <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Delete Employee</h4>
+			<form action="{{route($route_destroy)}}" method="POST">
+				<input type="hidden" name="list_id" class="list_id" value="">
+				<div class="modal-header">
+					<h4 class="modal-title">Xóa bản ghi</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">					
-					<p>Are you sure you want to delete these Records?</p>
-					<p class="text-warning"><small>This action cannot be undone.</small></p>
+				<div class="modal-body">
+					<p>Bạn có chăc chắn muốn xóa <span class='number_delete check_number_delete'></span> bản ghi này ?</p>
+					<p class="text-warning"><small>Hành động này không thể được hoàn tác.</small></p>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -212,33 +136,5 @@
 	</div>
 </div>
 
- 
 
-@endsection
-@section('js')
-<script type="text/javascript">
-$(document).ready(function(){
-	// Activate tooltip
-	$('[data-toggle="tooltip"]').tooltip();
-	
-	// Select/Deselect checkboxes
-	var checkbox = $('table tbody input[type="checkbox"]');
-	$("#selectAll").click(function(){
-		if(this.checked){
-			checkbox.each(function(){
-				this.checked = true;                        
-			});
-		} else{
-			checkbox.each(function(){
-				this.checked = false;                        
-			});
-		} 
-	});
-	checkbox.click(function(){
-		if(!this.checked){
-			$("#selectAll").prop("checked", false);
-		}
-	});
-});
-</script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,20 +47,35 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-        public function render($request, Exception $exception)
+    public function render($request, Exception $exception)
     {
         if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
             return response()->json(['error' => 'token_expired'], $exception->getStatusCode());
-        }
-        else if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+        } elseif ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
             return response()->json(['error' => 'token_invalid'], $exception->getStatusCode());
-        }
-        else if ($exception instanceof \Tymon\JWTAuth\Exceptions\JWTException) {
+        } elseif ($exception instanceof \Tymon\JWTAuth\Exceptions\JWTException) {
             return response()->json(['error' => $exception->getMessage()], $exception->getStatusCode());
-        }
-        else if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException){
+        } elseif ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException) {
             return response()->json(['error' => 'token_has_been_blacklisted'], $exception->getStatusCode());
         }
         return parent::render($request, $exception);
+    }
+
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+        $guard = array_get($exception->guards(), 0);
+        switch ($guard) {
+            case 'admin':
+                $login = 'admin.login';
+                break;
+            default:
+                $login = 'login';
+                break;
+        }
+        return redirect()->guest(route($login));
     }
 }
