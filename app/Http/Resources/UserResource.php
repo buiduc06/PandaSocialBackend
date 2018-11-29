@@ -24,7 +24,8 @@ class UserResource extends Resource
             'isMydata'  => $this->isMyProfile(),
             'generalFriends' =>$this->generalFriends(),
             'isMyfriends'=>$this->isMyfriends(),
-            'channel'=> $this->getPrivateChannel()
+            'channel'=> $this->getPrivateChannel(),
+            'status_online'=>$this->status_online,
         ];
     }
 }

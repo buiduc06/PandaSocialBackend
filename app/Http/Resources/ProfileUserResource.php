@@ -26,6 +26,8 @@ class ProfileUserResource extends Resource
             'listImgUpload'=>$this->getListImage(6),
             'isMyProfile'=>$this->isMyProfile(),
             'isMyfriends'=>$this->isMyfriends(),
+            'cover'    => $this->getCover(),
+            'isMydata'  => $this->isMyProfile(),
         ];
     }
 }

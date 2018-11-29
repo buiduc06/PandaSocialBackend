@@ -41,6 +41,8 @@ class RouteServiceProvider extends ServiceProvider
         
         $this->mapTicketRoutes();
 
+        $this->mapAdminRoutes();
+
         //
     }
 
@@ -79,5 +81,13 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/ticket.php'));
+    }
+
+    protected function mapAdminRoutes()
+    {
+        Route::prefix('admin')
+             ->middleware('web', 'auth')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/admin.php'));
     }
 }

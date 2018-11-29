@@ -169,4 +169,13 @@ class AuthController extends Controller
         }
         return response()->json($dataChane->getAvatar(), 200);
     }
+    public function changeStatusOnline(request $request)
+    {
+        $user = $this->jwtAuth->parseToken()->authenticate();
+        $userChange = User::findOrFail($user['id']);
+        $userChange->update([
+            'status_online'=> $request->data
+        ]);
+        return response()->json($request->data, 200);
+    }
 }

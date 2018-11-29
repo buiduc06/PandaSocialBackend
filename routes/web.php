@@ -12,13 +12,24 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
-Route::get('/home', function () {
-    return 'home';
-});
-Route::get('test', function() {
-    return \App\User::find(12)->getListRemoveFriends();
-});
+// Route::get('/home', function () {
+//     return 'home';
+// });
+// Route::get('test', function () {
+//     return \App\User::find(12)->getListRemoveFriends();
+// });
 
 Route::get('testArray', 'PostMultiController@updateActionStatus');
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');

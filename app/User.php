@@ -9,14 +9,17 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+    // bảng này chứa thông tin đăng nhập của bọn hs
+    // thông tin đăng nhập của admin ở bảng admin_users
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'name', 'email', 'password', 'uid_user',
+        'name', 'email', 'password', 'uid_user','status_online'
     ];
 
 
