@@ -79,26 +79,26 @@
 					<th>Actions</th>
 				</tr>
 			</thead>
-			{{-- {{dd($cources)}} --}}
+			{{-- {{dd($courses)}} --}}
 			<tbody>
-				@foreach($cources as $cource)
+				@foreach($courses as $course)
 				<tr>
 					<td>
 						<span class="custom-checkbox">
-							<input type="checkbox" id="checkbox1" name="options[]" value="1">
+							<input type="checkbox" class="delete_mute_value" id="checkbox1" name="options[]" value="{{$course->id}}">
 							<label for="checkbox1"></label>
 						</span>
 					</td>
-					<td>{{$cource->id}}</td>
-					<td>{{$cource->title}}</td>
-					<td>{{optional($cource->category)->name}}</td>
-					<td>{{str_limit($cource->summary, $limit = 50, $end = '...')}}</td>
-					<td>{{optional($cource->adminUser)->name}}</td>
-					<td>{{empty($cource->video) ? 0 : count($cource->video)}}</td>
-					<td>{{convertDate($cource->created_at)}}</td>
+					<td>{{$course->id}}</td>
+					<td>{{$course->title}}</td>
+					<td>{{optional($course->category)->name}}</td>
+					<td>{{str_limit($course->summary, $limit = 50, $end = '...')}}</td>
+					<td>{{optional($course->adminUser)->name}}</td>
+					<td>{{empty($course->video) ? 0 : count($course->video)}}</td>
+					<td>{{convertDate($course->created_at)}}</td>
 					<td>
-						<a href="{{route($route_edit)}}/{{$cource->id}}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-						<a href="javascript:;" data-id="{{$cource->id}}" class="delete delete_one"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+						<a href="{{route($route_edit)}}/{{$course->id}}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+						<a href="javascript:;" data-id="{{$course->id}}" class="delete delete_one"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 					</td>
 				</tr>
 				@endforeach
@@ -106,8 +106,8 @@
 		</table>
 
 		<div class="clearfix">
-			<div class="hint-text">Showing <b>{{$cources->currentPage()}}</b> out of <b>{{$cources->total()}}</b> entries</div>
-			{{$cources->links('pagination::custome-pg')}}
+			<div class="hint-text">Showing <b>{{$courses->currentPage()}}</b> out of <b>{{$courses->total()}}</b> entries</div>
+			{{$courses->links('pagination::custome-pg')}}
 		</div>
 	</div>
 </div>

@@ -12,9 +12,17 @@
     <!-- Custom CSS -->
     @include('admin.layouts.css')
     @yield('css')
+    @stack('css')
 </head>
 
 <body>
+    <style>
+        .preloader{
+            width: 100%;
+            height: 100%;
+            background-color: black;
+        }
+    </style>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -23,6 +31,18 @@
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
+    </div>
+ 
+    <div class="modal fade" style="background-color: rgba(17, 17, 17, 0.6);" id="preloader_2" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="container text-center" style="display: flex;align-items: center;justify-content: center;width: 100%;min-height: 100%">
+                <div class="col-sm-3">
+                    <img src="https://loading.io/spinners/microsoft/lg.rotating-balls-spinner.gif" width="100px" height="auto">
+                    <h5 style="color:white;" class="mt-2">Đang tải video lên cloud</h5> 
+                </div>
+            </div>
+             </div>
+        
+        
     </div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
@@ -128,5 +148,9 @@
      @endif
 {{--     <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="vendor/datatables-bs/js/dataTables.bootstrap.min.js"></script> --}}
+@stack('js')
+ 
+ 
+
 </body>
 </html>

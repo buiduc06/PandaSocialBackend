@@ -1,0 +1,139 @@
+
+.field_icon {
+    color: #428BCA;
+}
+
+.panel-primary > .panel-heading {
+    color: #FFF;
+    background-color: #428BCA;
+    border-color: #428BCA;
+}
+
+.panel-primary {
+    border-color: #428BCA;
+}
+
+.panel-heading{
+    -webkit-box-shadow: 0 3px 7px 0 #89b8e1;
+    -moz-box-shadow: 0 3px 7px 0 #89b8e1;
+    box-shadow: 0 3px 7px 0 #89b8e1;
+}
+form>a {
+    color: #428BCA;
+}
+
+.header_border_left {
+    border-left: 1px solid #62A9E7;
+}
+
+.header_border_right {
+    border-right: 1px solid #62A9E7;
+}
+
+.header_head {
+    text-align: center;
+    border-left: 1px solid #1f69a9;
+    border-right: 1px solid #1f69a9;
+}
+
+.btn-primary,
+.btn-primary:link,
+.btn-primary:visited,
+.btn-primary:hover,
+.btn-primamry:active,
+.btn-primary:focus {
+    color: #fff;
+    background-color: #357ebd;
+    border-color: #D7EBF8;
+}
+.btn-primary[disabled],
+.btn-primary[disabled]:link,
+.btn-primary[disabled]:visited,
+.btn-primary[disabled]:hover,
+.btn-primary[disabled]:active,
+.btn-primary[disabled]:focus {
+    color: #fff;
+    background-color: #357ebd;
+    border-color: #D7EBF8;
+}
+
+#wrapper input:not([type="checkbox"]),
+#wrapper textarea {
+    border: 1px solid #D7EBF8;
+}
+
+#wrapper input:not([type="checkbox"]):active,
+#wrapper input:not([type="checkbox"]):focus,
+#wrapper textarea:active,
+#wrapper textarea:focus {
+    border: 1px solid #8CCCF5;
+}
+
+.mce-panel {
+    border: 1px solid #D7EBF8 !important;
+}
+
+div.tagsinput {
+    border: 1px solid #D7EBF8 !important;
+}
+
+#tags_tag {
+    border: #fff !important;
+}
+
+.form-control {
+    border: 1px solid #D7EBF8;
+}
+hr{
+    border-top: 1px solid #8CCCF5;
+}
+.seperator {
+    border-bottom: 1px solid #8CCCF5;
+    width: 96%;
+    font-size: 18px;
+    color: #8CCCF5;
+}
+
+.seperator_mini {
+    border-bottom: 2px solid #8CCCF5;
+    width: 46%;
+    font-size: 18px;
+    color: #8CCCF5;
+    margin: 15px 0;
+}
+
+.fa {
+    color: #8CCCF5;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+    color: #fff;
+    background-color: #428BCA;
+}
+
+.bootstrap-tagsinput {
+    border: 1px solid #D7EBF8;
+}
+
+.chosen-container-multi .chosen-choices {
+    border: 1px solid #D7EBF8;
+}
+
+.chosen-container-active .chosen-choices {
+    border: 1px solid #8CCCF5;
+}
+
+.wizard > .steps .current a, .wizard > .steps .current a:hover, .wizard > .steps .current a:active {
+    background-color:#428BCA ;
+    color:#fff;
+}
+.wizard > .steps .error a, .wizard > .steps .error a:hover, .wizard > .steps .error a:active {
+    background: #ef6f6c;
+}
+
+.wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active {
+    background-color:#428BCA ;
+    color:#fff;
+}

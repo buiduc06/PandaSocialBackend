@@ -10,13 +10,18 @@ class course extends Model
     protected $table = 'courses';
 
     protected $fillable = [
-        'title', 'description', 'summary', 'created_by', 'slug', 'status'
+        'title', 'description', 'summary', 'created_by', 'slug', 'status', 'category_id'
     ];
 
 
     public function video()
     {
         return $this->belongsToMany('App\video', 'course_videos');
+    }
+
+    public function coursevideo()
+    {
+        return $this->hasMany('App\courseVideo', 'course_id', 'id');
     }
 
     public function category()
@@ -30,10 +35,22 @@ class course extends Model
     }
 
 
-    // scope
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($model) { // before delete() method call this
+
+            foreach ($model->video as $video) {
+                $video->deleteVideoS3();
+                $video->delete();
+            }
+            $model->coursevideo()->delete();
+        });
+    }
 
     public function scopeActive($query)
     {
         return $query->where('status', 1);
     }
+
 }

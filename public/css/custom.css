@@ -1,0 +1,424 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+body {
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 0.04em;
+    background-image: url(../bg_img/shattered-dark.png);
+    background-color: #418bca;
+    height: 100%;
+    /* padding-top: 2%; */
+}
+
+p,
+html {
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 0.04em;
+}
+
+a {
+    cursor: pointer;
+}
+
+
+.color {
+    color: #418bca !important;
+}
+
+.error {
+    color: #FF9F75 !important;
+}
+
+.nomar {
+    margin: 0 !important;
+}
+
+.nopad {
+    padding: 0 !important;
+}
+
+.noborder {
+    border: 1px solid #fff !important;
+}
+
+.ion-calendar,
+.dob {
+    cursor: pointer;
+}
+
+.label-info {
+    background-color: #5bc0de;
+    margin-top: 15px;
+    line-height: 33px;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-weight: 400 !important;
+}
+
+#wrapper label {
+    color: #494949;
+    position: relative;
+}
+#wrapper .row{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#container_demo {
+    text-align: left;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#wrapper {
+    width: 100%;
+    right: 0;
+    margin: 0 auto;
+}
+
+#wrapper h3 {
+    font-size: 25px;
+    color: #494949;
+    padding: 0 0 10px 0;
+    /** For the moment only webkit supports the background-clip:text; */
+
+    -webkit-background-clip: text;
+}
+
+#wrapper p {
+    margin-bottom: 15px;
+}
+
+#wrapper p:first-child {
+    margin: 0;
+}
+/**** advanced input styling ****/
+/* placeholder */
+
+::-webkit-input-placeholder {
+    color: rgb(190, 188, 188);
+}
+/* all the input except submit and checkbox */
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+    color: rgb(190, 188, 188);
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: #FFF;
+}
+.form-control .btn{
+    padding: 1px;
+}
+.form-control {
+    padding: 2px 6px 2px 28px;
+    height: 40px;
+    width: 100%;
+}
+label {
+    display: inline-block;
+    max-width: 100%;;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom:5px;
+}
+label.radio-inline,label.checkbox-inline, .checkbox label{
+    margin-top:0;
+    padding-left: 5px;
+}
+.field_icon {
+    position: relative;
+    left: 12px;
+    top: 35px;
+    font-size: 14px;
+}
+textarea{
+    padding:10px 12px 7px 28px !important;
+}
+
+/*only for Tags input field*/
+
+.bootstrap-tagsinput input{
+    border:none !important;
+}
+.bootstrap-tagsinput{
+    width:100%;
+}
+/* end of Tag input field*/
+
+
+.vertical-offset-100 {
+    padding-top: 80px;
+}
+
+.img_txt {
+    height: 25px !important;
+}
+
+.mini {
+    width: 98% !important;
+}
+
+.minitext {
+    width: 90% !important;
+}
+/* bootstrap overwriiten */
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -moz-border-radius: 5px;
+}
+
+.panel-body {
+    padding: 15px 22px;
+}
+
+.panel-heading {
+    text-align: center;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+}
+
+.panel-heading > .dropdown .dropdown-toggle {
+    color: inherit;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 24px;
+    color: inherit;
+    text-align: center;
+}
+
+.panel-title > a {
+    color: inherit;
+}
+/*----skin button----*/
+
+.box3 {
+    padding: 1.5%;
+    background-color: #1FB5AC;
+    border: 1px solid #fff;
+    margin: 10px 5px;
+    float: left;
+}
+
+.box8 {
+    padding: 1.5%;
+    background-color: #F76286;
+    border: 1px solid #fff;
+    margin: 10px 5px;
+    float: left;
+}
+
+.box2 {
+    padding: 1.5%;
+    background-color: #418bca;
+    border: 1px solid #fff;
+    margin: 10px 5px;
+    float: left;
+}
+
+.box5 {
+    padding: 1.5%;
+    background-color: #7266BA;
+    border: 1px solid #fff;
+    margin: 10px 5px;
+    float: left;
+}
+
+.box1 {
+    padding: 1.5%;
+    background-color: #dadfe1;
+    border: 1px solid #fff;
+    margin: 10px 5px;
+    float: left;
+}
+
+.box6 {
+    padding: 1.5%;
+    background-color: #825228;
+    border: 1px solid #fff;
+    margin: 10px 5px;
+    float: left;
+}
+
+.box4 {
+    padding: 1.5%;
+    background-color: #336e7b;
+    border: 1px solid #fff;
+    margin: 10px 5px;
+    float: left;
+}
+
+.box7 {
+    padding: 1.5%;
+    background-color: #3D3B39;
+    border: 1px solid #fff;
+    margin: 10px 5px;
+    float: left;
+}
+/* color skin boxes alignment in form page*/
+
+.color-themes {
+    text-align: center;
+    padding-left: 40%;
+    opacity: 0.5;
+    margin-bottom: 6%;
+}
+
+.header_border_left {
+    float: right;
+    width: 10%;
+    padding: 30px 0;
+    margin-top: -20px;
+}
+
+.header_border_right {
+    padding: 30px 0;
+    margin-top: -20px;
+    width: 10%;
+}
+
+.header_head {
+    text-align: center;
+    padding: 16px 0;
+    top: -20px;
+    bottom: -120px;
+    width: 80%;
+}
+
+.icon_header {
+    font-size: 20px;
+}
+
+.header_icon {
+    font-size: 20px;
+}
+
+.anim-checkbox label {
+    position: relative;
+}
+
+.anim-checkbox label:before,
+.anim-checkbox label:after {
+    font-family: 'FontAwesome';
+    /*absolutely positioned*/
+
+    position: absolute;
+    left: 6px;
+}
+
+.anim-checkbox label:before {
+    content: '\f096';
+}
+/*unchecked*/
+
+.anim-checkbox label:after {
+    content: '\f046';
+    /*checked*/
+    /*checked icon will be hidden by default by using 0 max-width and overflow hidden*/
+
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0.5;
+    /*CSS3 transitions for animated effect*/
+
+    web-transition: all 0.35s;
+}
+
+.anim-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.anim-checkbox input[type="checkbox"]:checked + label:after {
+    max-width: 25px;
+    /*an arbitratry number more than the icon's width*/
+
+    opacity: 1;
+    /*for fade in effect*/
+}
+
+.anim-checkbox .primary:checked + label:before,
+.anim-checkbox .primary:checked + label:after {
+    color: #428bca;
+}
+
+.anim-checkbox .success:checked + label:before,
+.anim-checkbox .success:checked + label:after {
+    color: #3c763d;
+}
+
+.anim-checkbox .warning:checked + label:before,
+.anim-checkbox .warning:checked + label:after {
+    color: #8a6d3b;
+}
+
+.anim-checkbox .danger:checked + label:before,
+.anim-checkbox .danger:checked + label:after {
+    color: #a94442;
+}
+
+.anim-checkbox .info:checked + label:before,
+.anim-checkbox .info:checked + label:after {
+    color: #31708f;
+}
+
+
+.btn-primary {
+    font-size: 18px;
+    outline: none !important;
+}
+/* rating icon size*/
+.half-right-space{
+    width:48%;
+    margin-right:0;
+    float: left;
+}
+.half-left-space{
+    width:48%;
+    margin-left:0;
+    float: right;
+}
+@media(max-width: 750px) {
+    .ion-locked {
+        position: absolute;
+        top: 55px;
+    }
+    .boxes1 .header_border_right {
+        padding: 48px 0;
+    }
+    .boxes1 .header_border_left {
+        padding: 48px 0;
+    }
+    .boxes1 .header_head {
+        padding: 19px 0;
+    }
+    .boxes1 {
+        padding: 20px 0 75px 0;
+    }
+}
+
+@media(max-width:450px) {
+    .boxes .header_border_right {
+        padding: 48px 0;
+    }
+    .boxes .header_border_left {
+        padding: 48px 0;
+    }
+    .boxes .header_head {
+        padding: 19px 0;
+    }
+    .boxes {
+        padding: 20px 0 75px 0;
+    }
+    .half-right-space ,.half-left-space{
+        width:100%;
+        margin:0;
+        float:left;
+    }
+}

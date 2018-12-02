@@ -48,7 +48,7 @@
     });
 
     $('.delete_mute').on('click', function(event) {
-
+ 
         var ckUnit = [];
         var i =0;
         $('.delete_mute_value').each(function(index, el) {

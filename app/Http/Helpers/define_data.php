@@ -1,6 +1,6 @@
 <?php
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Storage;
 // định nghĩa menu khách hàng ở đây
 function define_admin_menu()
 {
@@ -76,4 +76,42 @@ function checkActive($value)
         return '<span class="status text-success">•</span> Kích hoạt';
     }
     return '<span class="status text-danger">•</span> Không kích hoạt';
+}
+
+function uploadFiles($files, $folder = 'videos/')
+{
+    if (is_array($files)) {
+        foreach ($files as $file) {
+            $filename = str_slug($file->getClientOriginalName()) . time() . '.' . $file->getClientOriginalExtension();
+            $s3 = \Storage::disk('s3');
+            $filePath = '/uploads/' . $folder . $filename;
+            $stream = fopen($file->getRealPath(), 'r+');
+            $s3->put($filePath, $stream);
+            $data_file[] =
+            [
+                'link'  => $filename,
+                'title' => $file->getClientOriginalName(),
+                'size'  => $file->getClientSize()
+            ];
+        }
+        return $data_file;
+    } else {
+        $file = $files;
+        $filename = str_slug($file->getClientOriginalName()) . time() . '.' . $file->getClientOriginalExtension();
+        $s3 = \Storage::disk('s3');
+        $filePath = '/uploads/' . $folder . $filename;
+        $stream = fopen($file->getRealPath(), 'r+');
+        $s3->put($filePath, $stream);
+        $data_file =
+            [
+                'link'  => $filename,
+                'title' => $file->getClientOriginalName(),
+                'size'  => $file->getClientSize()
+            ];
+
+        return $data_file;
+    }
+
+
+
 }

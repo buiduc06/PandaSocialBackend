@@ -57,3 +57,15 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/block-user', $controller.'destroy')->name($routeName.'.destroy');
 });
 ###################################### End course ########################################
+
+
+######################################## video ########################################
+
+Route::group(['prefix' => 'video'], function () {
+
+    $controller = 'Admin\\VideoController@';
+    $routeName = 'admin.video';
+
+    Route::get('/{video_name}', $controller.'downloadVideo')->name($routeName.'.download.video');
+    Route::post('delete', $controller.'delete')->name($routeName.'.delete.video');
+});
