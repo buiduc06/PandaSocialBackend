@@ -35,10 +35,12 @@ class course extends Model
     }
 
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
-        static::deleting(function($model) { // before delete() method call this
+        static::deleting(function ($model) {
+ // before delete() method call this
 
             foreach ($model->video as $video) {
                 $video->deleteVideoS3();
@@ -53,4 +55,8 @@ class course extends Model
         return $query->where('status', 1);
     }
 
+    public function getLinkCourse()
+    {
+        return route('customer.course', ['slug'=>$this->slug, 'id'=>$this->id]);
+    }
 }

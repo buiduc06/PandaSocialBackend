@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 use App\User;
+use App\course;
+use App\video;
 
 class CustomerController extends Controller
 {
@@ -16,7 +18,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('customer.course.index');
+        $data['data'] = course::orderby('id', 'DESC')->get();
+        $data['recent_videos'] = course::orderby('id', 'DESC')->paginate(3);
+        return view('customer.course.index', $data);
     }
 
     public function getListUser()
@@ -28,9 +32,11 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function course(request $request)
     {
-        //
+        $data['courses'] = course::with('video')->orderby('id', 'DESC')->findOrFail($request->id);
+ 
+        return view('customer.video.index', $data);
     }
 
     public function getManagerUser()

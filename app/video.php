@@ -21,16 +21,20 @@ class video extends Model
             $model->created_by = Auth::check() ? Auth::user()->id : '';
             $model->status = 1;
         });
+    }
 
+    public function adminUser()
+    {
+        return $this->belongsTo('App\AdminUser', 'created_by', 'id');
     }
-public function getNameVideoS3()
-{
-    if ($this->link) {
-        $link_video = 'uploads/videos/' . $this->link;
-        $link_video = \Storage::disk('s3')->url(link_video);
-        return $link_video;
+    public function getNameVideoS3()
+    {
+        if ($this->link) {
+            $link_video = 'uploads/videos/' . $this->link;
+            $link_video = \Storage::disk('s3')->url(link_video);
+            return $link_video;
+        }
     }
-}
     public function getVideoS3()
     {
         if ($this->link) {
@@ -62,7 +66,7 @@ public function getNameVideoS3()
     // public function downloadVideoS3()
     // {
     //     if ($this->link) {
-            
+    
 
     //         return (string)$request->getUri();
     //     }
