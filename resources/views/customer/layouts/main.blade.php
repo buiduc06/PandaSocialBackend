@@ -37,8 +37,8 @@
 	<script src="/assets/customer/js/jquery-1.11.1.min.js"></script>
 	<!--start-smoth-scrolling-->
 	<!-- fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 	<!-- //fonts -->
 	<link href="{{asset('assets/libs/toastr/build/toastr.min.css')}}" rel="stylesheet">
 </head>
