@@ -15,6 +15,10 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/', function () {
+    return redirect()->route('login');
+})->name('home');
+
 Auth::routes();
 
 
@@ -38,6 +42,7 @@ Route::get('forgot-pwd', function () {
 
 Route::get('logout', function () {
     if (Auth::guard('admin')->check()) {
+        // dd(Auth::guard('admin')->check());
         Auth::guard('admin')->logout();
         return redirect()->route('admin.login')->with('msg', 'Logout success');
     } else {

@@ -15,4 +15,8 @@ trait TraitMain
     {
         return $this::Active()->select('id')->count();
     }
+    public function getDatePublic()
+    {
+        return $this->created_at->format('d-M-Y');
+    }
 }

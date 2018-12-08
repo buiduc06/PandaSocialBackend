@@ -1,6 +1,8 @@
 <?php
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 // định nghĩa menu khách hàng ở đây
 function define_admin_menu()
 {
@@ -111,7 +113,4 @@ function uploadFiles($files, $folder = 'videos/')
 
         return $data_file;
     }
-
-
-
 }

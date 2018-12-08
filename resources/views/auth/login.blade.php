@@ -7,8 +7,8 @@
     <div class="auth-box on-sidebar">
         <div id="loginform">
             <div class="logo">
-                <span class="db"><img src="/assets/images/logo-icon.png" alt="logo" /></span>
-                <h5 class="font-medium m-b-20">Sign In to Admin</h5>
+                <span class="db"><img src="/images/logo_2.png" alt="logo" /></span>
+                <h5 class="font-medium m-b-20 mt-2">Sign In to Admin</h5>
             </div>
             <!-- Form -->
             <div class="row">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group m-b-0 m-t-10">
                         <div class="col-sm-12 text-center">
-                            Don't have an account? <a href="{{route('register')}}" class="text-info m-l-5"><b>Sign Up</b></a>
+                            Don't have an account? <a href="https://social.ducpanda.info/login" class="text-info m-l-5"><b>Sign Up</b></a>
                         </div>
                     </div>
                 </form>

@@ -21,6 +21,20 @@ class video extends Model
             $model->created_by = Auth::check() ? Auth::user()->id : '';
             $model->status = 1;
         });
+
+        static::addGlobalScope(function ($query) {
+
+            if (!Auth::guard('admin')->check()) {
+                return $query->where('videos.status', '!=', 0);
+            }
+        });
+    }
+
+
+
+    public function course()
+    {
+        return $this->belongsToMany('App\course', 'course_videos');
     }
 
     public function adminUser()
@@ -71,4 +85,13 @@ class video extends Model
     //         return (string)$request->getUri();
     //     }
     // }
+    public function getLinkVideo()
+    {
+        $data_course = $this->course->first();
+        return $data_course->getLinkCourse($this->id);
+    }
+    public function getThumbVideo()
+    {
+        return '';
+    }
 }

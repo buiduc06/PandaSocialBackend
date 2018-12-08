@@ -12,20 +12,20 @@ class PostResource extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-     public function toArray($request)
+    public function toArray($request)
     {
         return [
-            'post_id'           => $this->id,
-            'created_at'        => $this->getDateCreatePost(),
-            'summary'           => $this->pms_summary,
-            'content'           => $this->pms_content,
-            'user_tag_id'       => $this->pms_user_tag_id,
-            'location'          => $this->pms_location,
-            'post_user_info'    => new UserResource(\App\User::find($this->pms_user_id)),
-            'action_with_post'  => $this->getActionPost(),
-            'listcomment'       => $this->getCommentPost(),
-            'isMyPost'          => $this->checkMyPost(),
-            'listImage'         => $this->getListImg(),
+           'post_id'           => $this->id,
+           'created_at'        => $this->getDateCreatePost(),
+           'summary'           => $this->pms_summary,
+           'content'           => $this->pms_content,
+           'user_tag_id'       => $this->pms_user_tag_id,
+           'location'          => $this->pms_location,
+           'post_user_info'    => new UserResource(\App\User::find($this->pms_user_id)),
+           'action_with_post'  => $this->getActionPost(),
+           'listcomment'       => $this->getCommentPost(),
+           'isMyPost'          => $this->checkMyPost(),
+           'listImage'         => $this->getListImg(),
         ];
     }
 }

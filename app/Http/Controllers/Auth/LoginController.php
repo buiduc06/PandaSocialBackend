@@ -54,7 +54,7 @@ class LoginController extends Controller
             [
                 'email.required' => 'vui lòng nhập tên đăng nhập của bạn',
                 'email.max' => 'Độ dài tối đa của Tên đăng nhập là 255',
-                'email.exists' => 'Tài khoản của bạn đã bị vô hiệu hóa',
+                'email.exists' => 'Tài khoản của bạn đã bị vô hiệu hóa hoặc không tồn tại',
                 'password.required' => 'Vui lòng nhập mật khẩu của bạn',
             ]
         );

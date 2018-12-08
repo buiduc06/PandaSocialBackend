@@ -7,8 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
-    <title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_2.png">
+    <title>@yield('title', 'Quản trị | Mạng xã hội học tập panda')</title>
     <!-- Custom CSS -->
     @include('admin.layouts.css')
     @yield('css')
@@ -149,7 +149,7 @@
 {{--     <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="vendor/datatables-bs/js/dataTables.bootstrap.min.js"></script> --}}
 @stack('js')
- 
+  
  
 
 </body>

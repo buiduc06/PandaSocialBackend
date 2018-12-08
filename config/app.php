@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Ho_Chi_Minh',
 
     /*
     |--------------------------------------------------------------------------
@@ -179,7 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-        Pawlox\VideoThumbnail\VideoThumbnailServiceProvider::class
+        Pawlox\VideoThumbnail\VideoThumbnailServiceProvider::class,
     ],
 
     /*
@@ -231,7 +231,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Datatables' => yajra\Datatables\Datatables::class,
-        'VideoThumbnail' => Pawlox\VideoThumbnail\Facade\VideoThumbnail::class
+        'VideoThumbnail' => Pawlox\VideoThumbnail\Facade\VideoThumbnail::class,
     ],
 
 ];

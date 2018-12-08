@@ -14,9 +14,11 @@
         "laravel/tinker": "~1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "pawlox/video-thumbnail": "^1.0",
+        "php-ffmpeg/php-ffmpeg": "^0.13.0",
         "spatie/laravel-permission": "^2.27",
         "tymon/jwt-auth": "0.5.12",
-        "yajra/laravel-datatables-oracle": "^8.13"
+        "yajra/laravel-datatables-oracle": "^8.13",
+        "jacobbennett/pjax": "~1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
