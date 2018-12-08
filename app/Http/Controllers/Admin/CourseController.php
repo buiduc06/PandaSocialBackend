@@ -171,7 +171,18 @@ class CourseController extends Controller
             return redirect(route($this->route_index))->with('msg_error', 'tạo bản ghi thất bại');
         }
     }
-  
+    public function edit(request $request)
+    {
+        // $disk = Storage::disk('s3')->allFiles();
+        // dd($disk);
+        if ($request->id) {
+            $course = course::findOrFail($request->id);
+            $categories = category::Active()->Parents()->select('id', 'name')->get();
+            return view('admin.course.edit', compact('course', 'categories'));
+        }
+
+        return abort(404);
+    }
 
     /**
      * Update the specified resource in storage.
