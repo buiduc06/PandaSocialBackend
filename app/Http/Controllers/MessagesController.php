@@ -30,21 +30,34 @@ class MessagesController extends Controller
         // $skip = $request->skip ? $request->skip :0 ;
         // $data = Messages::get();
         // $data_friend = User::find($user['id'])->getListFriends();
-      
+        
         $data_only= User::find($user['id']);
         $data_friend = $data_only->getListFriends();
         $data_resourse = User::whereIn('id', $data_friend)->get();
-         
+        
         foreach ($data_resourse as $item) {
-            $data_message[] = [
-                'user'=> new UserResource($data_only),
-                'message'=> $data_only->message($item->id),
-                'uid_user'=>$item->uid_user,
-                'channel'=>(int) $item->uid_user+(int) $data_only->uid_user
-            ];
+            if ($data_only->message($item->id)) {
+                $data_message[] = [
+                    'user'=> new UserResource($data_only),
+                    'message'=> $data_only->message($item->id),
+                    'uid_user'=>$item->uid_user,
+                    'channel'=>(int) $item->uid_user+(int) $data_only->uid_user
+                ];
+            }
         }
- 
-       
+
+        foreach ($data_resourse as $item) {
+            if ($data_only->message2($item->id)) {
+                $data_message[] = [
+                    'user'=> new UserResource($item),
+                    'message'=> $data_only->message2($item->id),
+                    'uid_user'=>$data_only->uid_user,
+                    'channel'=>(int) $data_only->uid_user+(int) $item->uid_user
+                ];
+            }
+        }
+        
+        
         return response()->json($data_message, 200);
     }
 }

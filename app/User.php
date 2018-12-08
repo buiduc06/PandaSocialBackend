@@ -279,8 +279,19 @@ class User extends Authenticatable
 
     public function message($friend_id)
     {
-         $user = JWTAuth::parseToken()->authenticate();
+        $user = JWTAuth::parseToken()->authenticate();
         $message = Messages::where('user_id', $user['id'])->where('friend_id', $friend_id)->select('messages', 'user_id', 'friend_id')->get();
+        $data_me = [];
+        foreach ($message as $item) {
+            $data_me[] = ['message'=>$item->messages];
+        }
+        // dd($message);
+        return $data_me;
+    }
+    public function message2($friend_id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $message = Messages::where('user_id', $friend_id)->where('friend_id', $user['id'])->select('messages', 'user_id', 'friend_id')->get();
         $data_me = [];
         foreach ($message as $item) {
             $data_me[] = ['message'=>$item->messages];
