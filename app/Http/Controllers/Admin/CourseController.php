@@ -115,6 +115,8 @@ class CourseController extends Controller
                 $fileExtension =  $file->getClientOriginalExtension();
                 $image_name = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
                 $file->move($uploadPath, $image_name);
+            } else {
+                $image_name = '';
             }
 
             if ($request->file('video')) {
@@ -223,6 +225,8 @@ class CourseController extends Controller
                 $fileExtension =  $file->getClientOriginalExtension();
                 $image_name = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
                 $file->move($uploadPath, $image_name);
+            } else {
+                $image_name = '';
             }
 
             if ($request->file('video')) {
