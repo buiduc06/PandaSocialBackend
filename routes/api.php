@@ -56,7 +56,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
         Route::post('deleteComment', 'CommentController@deleteComment');
         Route::post('getMoreComment', 'CommentController@getMoreComment');
         Route::post('addMessages', 'MessagesController@addMessages');
-        Route::post('getMessages', 'MessagesController@getMessages');
+        Route::get('getMessages', 'MessagesController@getMessages');
         Route::get('getNotification', 'NotificationController@index');
         Route::post('changeStatusOnline', 'AuthController@changeStatusOnline');
     });

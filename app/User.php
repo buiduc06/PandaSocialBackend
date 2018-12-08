@@ -276,4 +276,15 @@ class User extends Authenticatable
     {
         return $this->update([ 'status'=>2 ]);
     }
+
+    public function message($friend_id)
+    {
+        $message = Messages::where('user_id', 24)->select('messages')->get();
+
+        foreach ($message as $item) {
+            $data_me[] = ['message'=>$item->messages];
+        }
+        // dd($message);
+        return $data_me;
+    }
 }

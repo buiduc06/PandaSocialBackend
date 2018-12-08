@@ -15,8 +15,7 @@ class MessageResource extends Resource
     public function toArray($request)
     {
         return [
-            'messages'=>$this->messages,
-            'friend' => $this->getFriendsInfo(),
+            'messages'=>$this->messages
         ];
     }
 }

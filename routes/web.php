@@ -50,3 +50,4 @@ Route::get('logout', function () {
         return redirect()->route('home')->with('msg', 'Logout success');
     }
 })->name('logout');
+Route::get('getMessages', 'MessagesController@getMessages');
