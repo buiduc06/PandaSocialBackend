@@ -281,7 +281,7 @@ class User extends Authenticatable
     {
          $user = JWTAuth::parseToken()->authenticate();
         $message = Messages::where('user_id', $user['id'])->where('friend_id', $friend_id)->select('messages', 'user_id', 'friend_id')->get();
-
+        $data_me = [];
         foreach ($message as $item) {
             $data_me[] = ['message'=>$item->messages];
         }
