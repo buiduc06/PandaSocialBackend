@@ -26,12 +26,12 @@ class MessagesController extends Controller
     }
     public function getMessages(request $request)
     {
-        // $user = JWTAuth::parseToken()->authenticate();
+        $user = JWTAuth::parseToken()->authenticate();
         // $skip = $request->skip ? $request->skip :0 ;
         // $data = Messages::get();
         // $data_friend = User::find($user['id'])->getListFriends();
       
-        $data_only= User::find(24);
+        $data_only= User::find($user['id']);
         $data_friend = $data_only->getListFriends();
         $data_resourse = User::whereIn('id', $data_friend)->get();
          
